@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Task2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Task2</h2>
+
+<h3>Binary String Check </h3>
+<div class="row">
+    <div class="col-md-2"></div>
+    
+    <div class="col-md-8">Please Enter Binary string: <input type="text" id="binaryval" maxlength="15" class="form-control" /><br />
+    <span id="msg"></span></div>
+    <div class="col-md-2"></div>
+</div><br />
+<div class="row">
+    <div class="col-md-2"></div>
+    
+    <div class="col-md-8"><input type="button" id="btnCheck" class="btn btn-primary" value="Check"/></div>
+    <div class="col-md-2"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#binaryval').keypress(function (e) {
+            if (e.which == 48 || e.which == 49 || e.which == 8)  // 8 is for backspace
+            {
+               
+            } else {
+                return false;
+            }
+        });
+    });
+
+    function checkrules(s) {            
+
+        //check1
+        if (s.length == 0) {
+            return false;
+        }
+
+        var c_1 = 0;
+        var c_0 = 0;
+
+        for (var i = 0; i < s.length; i++) {
+            if (s[i] == '0') {
+                c_0 = c_0 + 1;
+
+            } if (s[i] == '1') {
+                c_1 = c_1 + 1;
+
+            }
+        }
+        //The number of 0's is equal to the number of 1's.
+        if (c_0 != c_1) {
+            return false;
+        }
+
+
+        var stringarray = Array.from(s);
+        
+       
+        for (var i = 0; i < s.length; i++) {
+            var sub = s.substring(0,i+1);           
+           
+            var cnt_1 = 0;
+            var cnt_0 = 0;
+
+            for (var j = 0; j < sub.length; j++) {
+                if (sub[j] == '0') {
+                    cnt_0 = cnt_0 + 1;
+
+                } if (sub[j] == '1') {
+                    cnt_1 = cnt_1 + 1;
+
+                }
+            }
+            if ( cnt_0 > cnt_1 ) {
+                return false;
+            }
+        }
+       
+        return true;       
+    }
+    $(btnCheck).click(function () {
+        var str = $("#binaryval").val();
+        if (checkrules(str)) {
+            $("#msg").html("Valid Binary String");           
+        }
+        else {
+            $("#msg").html("Invalid Binary String");
+           
+        }
+    });
+
+</script>
